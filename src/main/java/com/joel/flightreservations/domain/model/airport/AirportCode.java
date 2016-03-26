@@ -16,20 +16,20 @@ public class AirportCode implements Serializable {
     @NotNull
     // IATA code is exactly three letters.
     @Pattern(regexp = "[a-zA-Z]{3}")
-    private String iataCode;
+    private String airportCode;
     private static final java.util.regex.Pattern VALID_PATTERN
             = java.util.regex.Pattern.compile("[a-zA-Z]{3}");
 
     /**
-     * @param iataCode Three-letter string code
+     * @param idString Three-letter string code
      * @throws NullPointerException if iataCode null
      * @throws IllegalArgumentException if iataCode not valid as per regex
      */
-    public AirportCode(String iataCode) {
-        Validate.notNull(iataCode, "IATA code may not be null");
-        Validate.isTrue(VALID_PATTERN.matcher(iataCode).matches(),
-                iataCode + " is not a valid IATA code (does not match pattern)");
-        this.iataCode = iataCode.toUpperCase();
+    public AirportCode(String idString) {
+        Validate.notNull(idString, "IATA code may not be null");
+        Validate.isTrue(VALID_PATTERN.matcher(idString).matches(),
+                idString + " is not a valid IATA code (does not match pattern)");
+        this.setIdString(idString);
     }
 
     public AirportCode() {
@@ -37,14 +37,18 @@ public class AirportCode implements Serializable {
 
     @Override
     public String toString() {
-        return iataCode;
+        return  airportCode;
     }
 
     /**
      * @return IATA code string
      */
     public String getIdString() {
-        return iataCode;
+        return  airportCode;
+    }
+
+    public void setIdString(String idString) {
+        this.airportCode = idString.toUpperCase();
     }
 
     @Override
@@ -54,12 +58,12 @@ public class AirportCode implements Serializable {
 
         AirportCode airportCode1 = (AirportCode) o;
 
-        return iataCode.equals(airportCode1.iataCode);
+        return  airportCode.equals(airportCode1. airportCode);
 
     }
 
     @Override
     public int hashCode() {
-        return iataCode.hashCode();
+        return  airportCode.hashCode();
     }
 }

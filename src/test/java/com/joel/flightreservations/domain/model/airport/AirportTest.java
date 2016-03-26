@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test the AirportCode class
+ * Test the Airport class
  */
 public class AirportTest {
     AirportCode lhr;

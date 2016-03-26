@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * A place for planes to land. And take off. And do planey things. Not fly, though.
- * Uniquely identified with a three-letter code as described in
+ * Uniquely identified with a three-letter code as described at
  * http://www.world-airport-codes.com/
  */
 @Entity
@@ -30,7 +30,7 @@ public class Airport implements Serializable {
     /**
      * @param airportCode Airport official code
      * @param name Airport name (say, "London Heathrow")
-     * @throws IllegalArgumentException if IATA code or name are null
+     * @throws IllegalArgumentException if Airport code or name are null
      */
     public Airport(AirportCode airportCode, String name) {
         Validate.notNull(airportCode);
