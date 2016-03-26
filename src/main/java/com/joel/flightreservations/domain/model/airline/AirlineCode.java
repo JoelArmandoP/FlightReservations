@@ -21,15 +21,15 @@ public class AirlineCode implements Serializable{
             = java.util.regex.Pattern.compile("[a-zA-Z0-9]{2}");
 
     /**
-     * @param airlineCode Three-letter string code
+     * @param idString Three-letter string code
      * @throws NullPointerException if iataCode null
      * @throws IllegalArgumentException if iataCode not valid as per regex
      */
-    public AirlineCode(String airlineCode) {
-        Validate.notNull( airlineCode, "IATA code may not be null");
-        Validate.isTrue(VALID_PATTERN.matcher( airlineCode).matches(),
-                 airlineCode + " is not a valid IATA code (does not match pattern)");
-        this. airlineCode =  airlineCode.toUpperCase();
+    public AirlineCode(String idString) {
+        Validate.notNull( idString, "IATA code may not be null");
+        Validate.isTrue(VALID_PATTERN.matcher( idString).matches(),
+                 idString + " is not a valid IATA code (does not match pattern)");
+        this.setIdString(idString);
     }
 
     public AirlineCode() {
@@ -45,6 +45,10 @@ public class AirlineCode implements Serializable{
      */
     public String getIdString() {
         return  airlineCode;
+    }
+
+    public void setIdString(String idString) {
+        this.airlineCode = idString.toUpperCase();
     }
 
     @Override
