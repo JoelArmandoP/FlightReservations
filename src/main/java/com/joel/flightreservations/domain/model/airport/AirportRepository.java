@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface AirportRepository {
 
-    Airport find(IataCode unLocode);
+    Airport find(AirportCode unLocode);
 
     List<Airport> findAll();
 }

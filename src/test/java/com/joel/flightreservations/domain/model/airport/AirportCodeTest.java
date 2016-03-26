@@ -6,28 +6,28 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test the IataCode class.
+ * Test the AirportCode class.
  */
-public class IataCodeTest {
-    IataCode lhr;
-    IataCode ltn;
-    IataCode lgw;
+public class AirportCodeTest {
+    AirportCode lhr;
+    AirportCode ltn;
+    AirportCode lgw;
 
     @Before
     public void setUp() throws Exception {
-        this.lhr = new IataCode("lhr");
-        this.ltn = new IataCode("LTN");
-        this.lgw = new IataCode("lGW");
+        this.lhr = new AirportCode("lhr");
+        this.ltn = new AirportCode("LTN");
+        this.lgw = new AirportCode("lGW");
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorValidationArgNull() throws Exception {
-        IataCode c = new IataCode(null);
+        AirportCode c = new AirportCode(null);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testConstructorValidationArgInvalid() throws Exception {
-        IataCode c = new IataCode("not a IATA code");
+        AirportCode c = new AirportCode("not a IATA code");
     }
 
     @Test
@@ -46,7 +46,7 @@ public class IataCodeTest {
 
     @Test
     public void testEquals() throws Exception {
-        assertTrue(this.lhr.equals(new IataCode("LHR")));
+        assertTrue(this.lhr.equals(new AirportCode("LHR")));
         assertFalse((this.lhr.equals(this.lgw)));
     }
 }

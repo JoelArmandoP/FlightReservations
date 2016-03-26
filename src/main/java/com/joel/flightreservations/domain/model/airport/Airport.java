@@ -16,27 +16,27 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "Airport.findAll", query = "Select a from Airport a"),
         @NamedQuery(name = "Airport.findByCode",
-                query = "Select a from Airport a where a.iataCode = :iataCode")})
+                query = "Select a from Airport a where a.airportCode = :iataCode")})
 public class Airport implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Long id;
     @Embedded
-    private IataCode iataCode;
+    private AirportCode airportCode;
     @NotNull
     private String name;
 
     /**
-     * @param iataCode Airport official code
+     * @param airportCode Airport official code
      * @param name Airport name (say, "London Heathrow")
      * @throws IllegalArgumentException if IATA code or name are null
      */
-    public Airport(IataCode iataCode, String name) {
-        Validate.notNull(iataCode);
+    public Airport(AirportCode airportCode, String name) {
+        Validate.notNull(airportCode);
         Validate.notNull(name);
 
-        this.iataCode = iataCode;
+        this.airportCode = airportCode;
         this.name = name;
     }
 
@@ -46,8 +46,8 @@ public class Airport implements Serializable {
     /**
      * @return Airport's IATA code
      */
-    public IataCode getIataCode() {
-        return iataCode;
+    public AirportCode getAirportCode() {
+        return airportCode;
     }
 
     /**
@@ -64,17 +64,17 @@ public class Airport implements Serializable {
 
         Airport airport = (Airport) o;
 
-        return getIataCode().equals(airport.getIataCode()) && getName().equals(airport.getName());
+        return getAirportCode().equals(airport.getAirportCode()) && getName().equals(airport.getName());
 
     }
 
     @Override
     public String toString() {
-        return name + " [" + iataCode + "]";
+        return name + " [" + airportCode + "]";
     }
 
     @Override
     public int hashCode() {
-        return getIataCode().hashCode();
+        return getAirportCode().hashCode();
     }
 }
