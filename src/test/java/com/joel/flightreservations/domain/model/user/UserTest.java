@@ -3,8 +3,6 @@ package com.joel.flightreservations.domain.model.user;
 import com.joel.flightreservations.domain.model.airport.SampleAirports;
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.junit.Assert.*;
 
 /**
@@ -45,7 +43,7 @@ public class UserTest {
 
     @Test
     public void testEquals() throws Exception {
-        User user1copy = new User("JohnDoe", "John Doe", "john123");
+        User user1copy = new User("JohnDoe", "John Doe", "john123", "johndoe@gmail.com");
         assertTrue(SampleUsers.user1.getName().equals(user1copy.getName()) &&
         SampleUsers.user1.getUsername().equals(user1copy.getUsername()));
         assertFalse(SampleUsers.user2.getName().equals(user1copy.getName()) &&

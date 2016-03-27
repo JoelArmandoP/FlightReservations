@@ -3,7 +3,6 @@ package com.joel.flightreservations.domain.model.user;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.TimeZone;
 
 /**
  * An online traveller who can create and book travel itineraries.
@@ -27,13 +26,19 @@ public class User implements Serializable {
     private String password;
     @Embedded
     private Search lastSearch;
+    @NotNull
+    private String email;
+    @Embedded
+    private CreditCard creditCard;
 
 
-    public User(String username, String name, String password) {
+    public User(String username, String name, String password, String email) {
         this.username = username;
         this.name = name;
         this.password = password;
+        this.email = email;
         this.lastSearch = new Search();
+        this.creditCard = new CreditCard();
 
     }
 
@@ -96,5 +101,21 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", lastSearch=" + lastSearch +
                 '}';
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
