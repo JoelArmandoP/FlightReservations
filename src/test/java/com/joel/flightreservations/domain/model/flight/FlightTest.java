@@ -52,8 +52,8 @@ public class FlightTest {
     @Test
     public void testToString() throws Exception {
         Flight f = new Flight(SampleFlights.AA030);
-        assertEquals("AA030 DFWORD Wed Jun 15 13:30:00 BST 2016-Wed Jun 15 17:30:00 BST 2016", f.toString());
+        assertEquals("AA030 DFWORD 2016-06-15 12:30 GMT - 2016-06-15 16:30 GMT", f.toString());
         Flight f1 = new Flight(SampleFlights.M8255);
-        assertEquals("M8255 MELHKG Wed Jun 15 09:30:00 BST 2016-Wed Jun 15 17:30:00 BST 2016", f1.toString());
+        assertEquals("M8255 MELHKG 2016-06-15 08:30 GMT+10:00 - 2016-06-15 16:30 GMT", f1.toString());
     }
 }

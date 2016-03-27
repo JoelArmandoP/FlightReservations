@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -101,7 +102,7 @@ public class Flight implements Serializable{
      * Frees seats on a flight.
      * @param economy the number of seats to be freed in economy class
      * @param business the number of seats to be freed in business class
-     * @throws SeatsUnavailableException
+     * @throws IllegalArgumentException
      */
     public synchronized void unreserveSeats(int economy, int business) {
         if (economy < 0 || business < 0)
@@ -180,9 +181,13 @@ public class Flight implements Serializable{
 
     @Override
     public String toString() {
+        SimpleDateFormat departureDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm z");
+        departureDateFormat.setTimeZone(getDepartureAirport().getTimeZone());
+        SimpleDateFormat arrivalDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm z");
+        arrivalDateFormat.setTimeZone(getArrivalAirport().getTimeZone());
         return getFlightCode() + " " + getDepartureAirport().getAirportCode() +
                 getArrivalAirport().getAirportCode() + " " +
-                getDepartureTime() + "-" + getArrivalTime();
+                departureDateFormat.format(getDepartureTime()) + " - " + arrivalDateFormat.format(getArrivalTime());
     }
 
     @Override
@@ -192,17 +197,15 @@ public class Flight implements Serializable{
 
         Flight flight = (Flight) o;
 
-        if (getAirline() != null ? !getAirline().equals(flight.getAirline()) : flight.getAirline() != null)
+        if (!getAirline().equals(flight.getAirline()))
             return false;
-        if (getFlightNumber() != null ? !getFlightNumber().equals(flight.getFlightNumber()) : flight.getFlightNumber() != null)
+        if (!getFlightNumber().equals(flight.getFlightNumber()))
             return false;
-        if (getDepartureAirport() != null ? !getDepartureAirport().equals(flight.getDepartureAirport()) : flight.getDepartureAirport() != null)
+        if (!getDepartureAirport().equals(flight.getDepartureAirport()))
             return false;
-        if (getArrivalAirport() != null ? !getArrivalAirport().equals(flight.getArrivalAirport()) : flight.getArrivalAirport() != null)
+        if (!getArrivalAirport().equals(flight.getArrivalAirport()))
             return false;
-        if (getDepartureTime() != null ? !getDepartureTime().equals(flight.getDepartureTime()) : flight.getDepartureTime() != null)
-            return false;
-        return getArrivalTime() != null ? getArrivalTime().equals(flight.getArrivalTime()) : flight.getArrivalTime() == null;
+        return getDepartureTime().equals(flight.getDepartureTime()) && getArrivalTime().equals(flight.getArrivalTime());
 
     }
 
