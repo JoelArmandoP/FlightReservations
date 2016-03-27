@@ -27,9 +27,7 @@ public class Airport implements Serializable {
     private Long id;
     @Embedded
     private AirportCode airportCode;
-    @NotNull
     private String name;
-    @NotNull
     private TimeZone timeZone;
 
     /**
