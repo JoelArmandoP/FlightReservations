@@ -19,7 +19,7 @@ import java.util.TimeZone;
 @NamedQueries({
         @NamedQuery(name = "Airport.findAll", query = "Select a from Airport a"),
         @NamedQuery(name = "Airport.findByCode",
-                query = "Select a from Airport a where a.airportCode = :iataCode")})
+                query = "Select a from Airport a where a.airportCode = :airportCode")})
 public class Airport implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
