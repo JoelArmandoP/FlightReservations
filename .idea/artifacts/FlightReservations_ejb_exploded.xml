@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-ejb" name="FlightReservations:ejb exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/FlightReservations_ejb_exploded</output-path>
-    <root id="root">
-      <element id="javaee-facet-resources" facet="FlightReservations/ejb/EJB" />
-      <element id="module-output" name="FlightReservations" />
-    </root>
-  </artifact>
-</component>

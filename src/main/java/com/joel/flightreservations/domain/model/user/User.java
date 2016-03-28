@@ -31,7 +31,6 @@ public class User implements Serializable {
     @Embedded
     private CreditCard creditCard;
 
-
     public User(String username, String name, String password,
                 String email, CreditCard creditCard) {
         setUsername(username);

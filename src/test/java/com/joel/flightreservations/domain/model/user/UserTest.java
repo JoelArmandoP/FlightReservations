@@ -43,7 +43,7 @@ public class UserTest {
 
     @Test
     public void testEquals() throws Exception {
-        User user1copy = new User("JohnDoe", "John Doe", "john123", "johndoe@gmail.com");
+        User user1copy = new User("JohnDoe", "John Doe", "john123", "johndoe@gmail.com", null);
         assertTrue(SampleUsers.user1.getName().equals(user1copy.getName()) &&
         SampleUsers.user1.getUsername().equals(user1copy.getUsername()));
         assertFalse(SampleUsers.user2.getName().equals(user1copy.getName()) &&

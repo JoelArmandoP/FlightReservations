@@ -19,8 +19,8 @@ import java.util.Date;
 public class Flight implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private static final int BUSINESS_VACANCIES = 10;
-    private static final int ECONOMY_VACANCIES = 90;
+    private static final long BUSINESS_VACANCIES = 10L;
+    private static final long ECONOMY_VACANCIES = 90L;
     @Id
     @GeneratedValue
     private Long id;
@@ -48,9 +48,9 @@ public class Flight implements Serializable{
     @NotNull
     private Date arrivalTime;
     @NotNull
-    private Integer businessClassVacancies;
+    private Long businessClassVacancies;
     @NotNull
-    private Integer economyClassVacancies;
+    private Long economyClassVacancies;
 
     public Flight(Airline airline, String flightNumber,
                   Airport departureAirport, Date departureTime,
@@ -135,11 +135,11 @@ public class Flight implements Serializable{
         this.arrivalTime = arrivalTime;
     }
 
-    public Integer getBusinessClassVacancies() {
+    public Long getBusinessClassVacancies() {
         return businessClassVacancies;
     }
 
-    public void setBusinessClassVacancies(Integer businessClassVacancies) {
+    public void setBusinessClassVacancies(Long businessClassVacancies) {
         Validate.inclusiveBetween(0, BUSINESS_VACANCIES, businessClassVacancies);
         this.businessClassVacancies = businessClassVacancies;
     }
@@ -160,11 +160,11 @@ public class Flight implements Serializable{
         this.departureTime = departureTime;
     }
 
-    public Integer getEconomyClassVacancies() {
+    public Long getEconomyClassVacancies() {
         return economyClassVacancies;
     }
 
-    public void setEconomyClassVacancies(Integer economyClassVacancies) {
+    public void setEconomyClassVacancies(Long economyClassVacancies) {
         Validate.inclusiveBetween(0, ECONOMY_VACANCIES, economyClassVacancies);
         this.economyClassVacancies = economyClassVacancies;
     }
