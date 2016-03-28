@@ -19,10 +19,45 @@ public class CreditCard implements Serializable{
 
 
     public CreditCard(String creditCardNumber, String expDate) {
-        this.creditCardNumber = creditCardNumber;
-        this.expDate = expDate;
+        setCreditCardNumber(creditCardNumber);
+        setExpDate(expDate);
     }
 
     public CreditCard() {
+    }
+
+    public String getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
+    }
+
+    public String getExpDate() {
+        return expDate;
+    }
+
+    public void setExpDate(String expDate) {
+        this.expDate = expDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CreditCard)) return false;
+
+        CreditCard that = (CreditCard) o;
+
+        return getCreditCardNumber().equals(that.getCreditCardNumber())
+                && getExpDate().equals(that.getExpDate());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCreditCardNumber().hashCode();
+        result = 31 * result + getExpDate().hashCode();
+        return result;
     }
 }
