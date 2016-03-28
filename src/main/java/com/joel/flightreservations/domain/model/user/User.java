@@ -32,14 +32,14 @@ public class User implements Serializable {
     private CreditCard creditCard;
 
 
-    public User(String username, String name, String password, String email) {
-        this.username = username;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.lastSearch = new Search();
-        this.creditCard = new CreditCard();
-
+    public User(String username, String name, String password,
+                String email, CreditCard creditCard) {
+        setUsername(username);
+        setName(name);
+        setPassword(password);
+        setEmail(email);
+        setLastSearch(new Search());
+        setCreditCard(creditCard);
     }
 
     public User() {
@@ -54,7 +54,6 @@ public class User implements Serializable {
     }
 
     public String getName() {
-
         return name;
     }
 
@@ -86,7 +85,6 @@ public class User implements Serializable {
         User user = (User) o;
 
         return id.equals(user.id);
-
     }
 
     @Override
