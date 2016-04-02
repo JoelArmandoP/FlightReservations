@@ -13,3 +13,7 @@ hs_err_pid*
 
 # Skip generated files.
 target/
+
+# Skip Intellij config
+.idea/
+
