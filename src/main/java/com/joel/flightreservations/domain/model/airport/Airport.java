@@ -1,10 +1,12 @@
 package com.joel.flightreservations.domain.model.airport;
 
+import com.joel.flightreservations.domain.model.flight.Flight;
 import org.apache.commons.lang3.Validate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -27,8 +29,17 @@ public class Airport implements Serializable {
     private Long id;
     @Embedded
     private AirportCode airportCode;
+    @NotNull
     private String name;
+    @NotNull
     private TimeZone timeZone;
+
+    @OneToMany(mappedBy = "departureAirport")
+    private Collection<Flight> departingFlightCollection;
+
+    @OneToMany(mappedBy = "arrivalAirport")
+    private Collection<Flight> arrivingFlightCollection;
+
 
     /**
      * @param airportCode Airport official code
@@ -92,4 +103,19 @@ public class Airport implements Serializable {
     }
 
 
+    public Collection<Flight> getDepartingFlightCollection() {
+        return departingFlightCollection;
+    }
+
+    public void setDepartingFlightCollection(Collection<Flight> departingFlightCollection) {
+        this.departingFlightCollection = departingFlightCollection;
+    }
+
+    public Collection<Flight> getArrivingFlightCollection() {
+        return arrivingFlightCollection;
+    }
+
+    public void setArrivingFlightCollection(Collection<Flight> arrivingFlightCollection) {
+        this.arrivingFlightCollection = arrivingFlightCollection;
+    }
 }
