@@ -6,8 +6,6 @@
             Persistence unit for the Flight Reservations bean
         </description>
 
-        <class>com.joel.flightreservations.domain.model.airport.Airport</class>
-
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:/home/joel/Databases/FlightReservations.sqlite" />

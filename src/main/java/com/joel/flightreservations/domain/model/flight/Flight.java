@@ -2,6 +2,7 @@ package com.joel.flightreservations.domain.model.flight;
 
 import com.joel.flightreservations.domain.model.airline.Airline;
 import com.joel.flightreservations.domain.model.airport.Airport;
+import com.joel.flightreservations.domain.model.reservation.Reservation;
 import org.apache.commons.lang3.Validate;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -53,6 +55,8 @@ public class Flight implements Serializable{
     private Long economyClassVacancies;
     @NotNull
     private float price;
+    @ManyToMany
+    private Collection<Reservation> reservationCollection;
 
     public Flight(Airline airline, String flightNumber,
                   Airport departureAirport, Date departureTime,
