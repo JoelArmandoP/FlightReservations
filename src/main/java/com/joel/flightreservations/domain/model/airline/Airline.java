@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@NamedQueries({
+@NamedQueries(value = {
         @NamedQuery(name = "Airline.findAll", query = "Select a from Airline a"),
         @NamedQuery(name = "Airline.findByCode",
                 query = "Select a from Airline a where a.airlineCode = :airlineCode")})

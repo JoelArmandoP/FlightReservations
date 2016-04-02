@@ -51,10 +51,12 @@ public class Flight implements Serializable{
     private Long businessClassVacancies;
     @NotNull
     private Long economyClassVacancies;
+    @NotNull
+    private float price;
 
     public Flight(Airline airline, String flightNumber,
                   Airport departureAirport, Date departureTime,
-                  Airport arrivalAirport, Date arrivalTime) {
+                  Airport arrivalAirport, Date arrivalTime, float price) {
         if (arrivalAirport == departureAirport)
             throw new IllegalArgumentException("Flight can't go from " + arrivalAirport + "to itself.");
         if (arrivalTime.before(departureTime))
@@ -67,6 +69,7 @@ public class Flight implements Serializable{
         this.setDepartureTime(departureTime);
         this.setBusinessClassVacancies(BUSINESS_VACANCIES);
         this.setEconomyClassVacancies(ECONOMY_VACANCIES);
+        this.setPrice(price);
     }
 
     public Flight() {
@@ -74,8 +77,7 @@ public class Flight implements Serializable{
 
     public Flight(Flight f) {
         this(f.getAirline(), f.getFlightNumber(), f.getDepartureAirport(), f.getDepartureTime(),
-                f.getArrivalAirport(), f.getArrivalTime());
-    }
+                f.getArrivalAirport(), f.getArrivalTime(), f.getPrice());    }
     public String getFlightCode() {
         return airline.getAirlineCode() + getFlightNumber();
     }
@@ -218,5 +220,13 @@ public class Flight implements Serializable{
         result = 31 * result + (getDepartureTime() != null ? getDepartureTime().hashCode() : 0);
         result = 31 * result + (getArrivalTime() != null ? getArrivalTime().hashCode() : 0);
         return result;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public float getPrice() {
+        return price;
     }
 }

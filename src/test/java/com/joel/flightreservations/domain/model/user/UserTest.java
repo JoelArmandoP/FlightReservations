@@ -18,9 +18,9 @@ public class UserTest {
     }
 
     @Test
-    public void testGetName() throws Exception {
-        assertEquals("John Doe", SampleUsers.user1.getName());
-        assertEquals("Mary Doe", SampleUsers.user2.getName());
+    public void testGetFirstname() throws Exception {
+        assertEquals("John", SampleUsers.user1.getFirstname());
+        assertEquals("Mary", SampleUsers.user2.getFirstname());
 
     }
 
@@ -43,16 +43,16 @@ public class UserTest {
 
     @Test
     public void testEquals() throws Exception {
-        User user1copy = new User("JohnDoe", "John Doe", "john123", "johndoe@gmail.com", null);
-        assertTrue(SampleUsers.user1.getName().equals(user1copy.getName()) &&
+        User user1copy = new User("JohnDoe", "John", "Doe", "john123", "johndoe@gmail.com", null);
+        assertTrue(SampleUsers.user1.getFirstname().equals(user1copy.getFirstname()) &&
         SampleUsers.user1.getUsername().equals(user1copy.getUsername()));
-        assertFalse(SampleUsers.user2.getName().equals(user1copy.getName()) &&
+        assertFalse(SampleUsers.user2.getFirstname().equals(user1copy.getFirstname()) &&
                 SampleUsers.user1.getUsername().equals(user1copy.getUsername()));
     }
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("User{ name='John Doe', username='JohnDoe', lastSearch=Search{" +
+        assertEquals("User{name='John Doe', username='JohnDoe', lastSearch=Search{" +
                 "departureAirportSearch=null, departureDateSearch=nullarrivalAirportSearch=null, arrivalDateSearch=null}}",
                 SampleUsers.user1.toString());
     }

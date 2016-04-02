@@ -40,6 +40,7 @@ public class AirlineCode implements Serializable{
         return  airlineCode;
     }
 
+
     /**
      * @return IATA code string
      */

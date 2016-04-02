@@ -21,7 +21,9 @@ public class User implements Serializable {
     @NotNull
     private String username;
     @NotNull
-    private String name;
+    private String firstname;
+    @NotNull
+    private String lastname;
     @NotNull
     private String password;
     @Embedded
@@ -31,10 +33,11 @@ public class User implements Serializable {
     @Embedded
     private CreditCard creditCard;
 
-    public User(String username, String name, String password,
+    public User(String username, String firstname, String lastname, String password,
                 String email, CreditCard creditCard) {
         setUsername(username);
-        setName(name);
+        setFirstname(firstname);
+        setLastname(lastname);
         setPassword(password);
         setEmail(email);
         setLastSearch(new Search());
@@ -52,13 +55,17 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
+
+    public String getLastname() { return lastname;    }
+
+    public void setLastname(String lastname) { this.lastname = lastname;    }
 
     public String getPassword() {
         return password;
@@ -91,14 +98,6 @@ public class User implements Serializable {
         return id.hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "User{"  +
-                " name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", lastSearch=" + lastSearch +
-                '}';
-    }
 
     public CreditCard getCreditCard() {
         return creditCard;
@@ -114,5 +113,16 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" +firstname + " "+ lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", lastSearch=" + lastSearch +
+                '}';
     }
 }
