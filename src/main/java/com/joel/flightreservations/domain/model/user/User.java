@@ -2,6 +2,7 @@ package com.joel.flightreservations.domain.model.user;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -19,6 +20,7 @@ public class User implements Serializable {
     @GeneratedValue
     private Long id;
     @NotNull
+    @Pattern(regexp = "[a-z0-9]{6}[a-z0-9]*")
     private String username;
     @NotNull
     private String firstname;
@@ -52,7 +54,7 @@ public class User implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     public String getFirstname() {
