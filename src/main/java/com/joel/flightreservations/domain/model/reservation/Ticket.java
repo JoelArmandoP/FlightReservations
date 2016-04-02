@@ -16,9 +16,6 @@ public class Ticket {
     @Id
     @GeneratedValue
     private Long id;
-    @NotNull
-    @Pattern(regexp = "[A-Z0-9]{2}-[0-9]{3}-[a-z0-9]{6}-[0-9]*")
-    private String ticketNumber;
     @ManyToOne
     @JoinColumn(name = "reservationId")
     private Reservation reservation;

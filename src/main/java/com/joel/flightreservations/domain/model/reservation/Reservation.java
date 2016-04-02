@@ -1,12 +1,15 @@
 package com.joel.flightreservations.domain.model.reservation;
 
 import com.joel.flightreservations.domain.model.flight.Flight;
+import com.joel.flightreservations.domain.model.flight.SeatsUnavailableException;
 import com.joel.flightreservations.domain.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A reservation is an itinerary of flights reserved by one user with one or more passengers.
@@ -21,36 +24,45 @@ public class Reservation {
     @ManyToOne
     private User user;
     @NotNull
-    private int seatsFirstClass;
+    private int businessSeats;
     @NotNull
-    private int seatsEconClass;
-    private Date expiryDate;
+    private int economySeats;
+    private Date expirationDate;
     @ManyToMany(mappedBy = "reservationCollection")
-    private Collection<Flight> flights;
+    private Collection<Flight> flightCollection;
     @OneToMany(mappedBy = "reservation")
     private Collection<Ticket> ticketCollection;
 
 
-    public Reservation(User user, int seatsEconClass, int seatsFirstClass, Date expiryDate) {
+    public Reservation(User user, int economySeats, int businessSeats, Date expirationDate) {
+        if (economySeats > 0 && businessSeats > 0)
+            throw new IllegalArgumentException("Can't mix classes in a single reservation");
+        if (economySeats < 0 || businessSeats < 0)
+            throw new IllegalArgumentException("Can't reserve negative seats");
+        this.setTicketCollection(new ArrayList<Ticket>());
+        this.setFlightCollection(new ArrayList<Flight>());
         this.setUser(user);
-        this.setSeatsEconClass(seatsEconClass);
-        this.setSeatsFirstClass(seatsFirstClass);
-        this.setExpiryDate(expiryDate);
+        this.setEconomySeats(economySeats);
+        this.setBusinessSeats(businessSeats);
+        this.setExpirationDate(expirationDate);
     }
 
-    public Reservation() {
+    public Reservation() {}
+
+    public Reservation(Reservation reservation) {
+        this(reservation.getUser(), reservation.getEconomySeats(),
+                reservation.getBusinessSeats(), reservation.getExpirationDate());
     }
 
-    public Collection<Flight> getFlights() {
-        return flights;
+    public Collection<Flight> getFlightCollection() {
+        return flightCollection;
     }
 
-    public void setFlights(Collection<Flight> flights) {
-        this.flights = flights;
+    public void setFlightCollection(Collection<Flight> flights) {
+        this.flightCollection = flights;
     }
 
     public Collection<Ticket> getTicketCollection() {
-
         return ticketCollection;
     }
 
@@ -58,28 +70,38 @@ public class Reservation {
         this.ticketCollection = ticketCollection;
     }
 
-    public Date getExpiryDate() {
-        return expiryDate;
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setExpirationDate(Date expirationDate) {
+        if (ticketCollection.size() > 0 && expirationDate != null)
+            return;
+        this.expirationDate = expirationDate;
     }
 
-    public int getSeatsEconClass() {
-        return seatsEconClass;
+    public int getEconomySeats() {
+        return economySeats;
     }
 
-    public void setSeatsEconClass(int seatsEconClass) {
-        this.seatsEconClass = seatsEconClass;
+    public void setEconomySeats(int economySeats) {
+        if (getBusinessSeats() > 0 && economySeats > 0)
+            throw new IllegalArgumentException("Can't add economy seats to a business reservation");
+        if (economySeats < 0)
+            throw new IllegalArgumentException("Can't reserve negative seats");
+        this.economySeats = economySeats;
     }
 
-    public int getSeatsFirstClass() {
-        return seatsFirstClass;
+    public int getBusinessSeats() {
+        return businessSeats;
     }
 
-    public void setSeatsFirstClass(int seatsFirstClass) {
-        this.seatsFirstClass = seatsFirstClass;
+    public void setBusinessSeats(int businessSeats) {
+        if (getEconomySeats() > 0 && businessSeats > 0)
+            throw new IllegalArgumentException("Can't add business seats to an economy reservation");
+        if (businessSeats < 0)
+            throw new IllegalArgumentException("Can't reserve negative seats");
+        this.businessSeats = businessSeats;
     }
 
     public User getUser() {
@@ -88,6 +110,20 @@ public class Reservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void emitTickets(List<String> passengerNames) throws SeatsUnavailableException {
+        if (passengerNames.size() != getBusinessSeats() + getEconomySeats())
+            throw new IllegalArgumentException("Wrong number of passenger names.");
+        int flightNo = 1;
+        for (Flight f: flightCollection) {
+            f.reserveSeats(getEconomySeats(), getBusinessSeats());
+            for (String passengerName: passengerNames) {
+                ticketCollection.add(new Ticket(this, f, passengerName, flightNo));
+            }
+            flightNo++;
+        }
+        setExpirationDate(null);
     }
 
     @Override
@@ -104,9 +140,9 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "expiryDate=" + expiryDate +
-                ", seatsEconClass=" + seatsEconClass +
-                ", seatsFirstClass=" + seatsFirstClass +
+                "expirationDate=" + expirationDate +
+                ", seatsEconClass=" + economySeats +
+                ", seatsFirstClass=" + businessSeats +
                 ", username=" + user.getFirstname() + " " + user.getLastname() +
                 '}';
     }
