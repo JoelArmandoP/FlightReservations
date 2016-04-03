@@ -71,7 +71,7 @@ public class ReservationTest {
     @Test
     public void testEmitTicket() throws Exception {
         Reservation reservation = new Reservation(SampleReservations.reservation1);
-        Date exp = SampleAirports.LNDHR.getTimeStamp(2016, 01, 30, 12, 00);
+        Date exp = buildDate(2016, 1, 30, 12, 0);
         reservation.setExpirationDate(exp);
         assertEquals(exp, reservation.getExpirationDate());
         List<Flight> flights = new ArrayList<>();
@@ -86,16 +86,16 @@ public class ReservationTest {
         assertEquals(4, tickets.size());
         assertNull(reservation.getExpirationDate());
         Ticket[] ticketArray = tickets.toArray(new Ticket[tickets.size()]);
-        Arrays.sort(ticketArray, (a, b) -> {
-            return a.getTicketNumber().compareTo(b.getTicketNumber());
-        });
-        String[] ticketNumbers = Arrays.stream(ticketArray).map(t -> t.getTicketNumber()).toArray(s -> new String[s]);
-        assertArrayEquals(new String[] {"AA-030-johndo-001", "AA-030-johndo-002",
-                "BA-149-johndo-001", "BA-149-johndo-002"}, ticketNumbers);
-        String[] ticketPassengerNames = Arrays.stream(ticketArray).map(t -> t.getPassengerName()).
-                toArray(s -> new String[s]);
-        assertArrayEquals(new String[] {"Mickey Mouse", "Patoruzu",
-                "Mickey Mouse", "Patoruzu"}, ticketPassengerNames);
+        Arrays.sort(ticketArray, (a, b) -> a.getTicketNumber().compareTo(b.getTicketNumber()));
+        String[] ticketNumbers = Arrays.stream(ticketArray).map(Ticket::getTicketNumber).toArray(String[]::new);
+        assertArrayEquals(
+                new String[] {"AA-030-johndo-001", "AA-030-johndo-002", "BA-149-johndo-001", "BA-149-johndo-002"},
+                ticketNumbers);
+        String[] ticketPassengerNames = Arrays.stream(ticketArray).map(Ticket::getPassengerName).
+                toArray(String[]::new);
+        assertArrayEquals(
+                new String[] {"Mickey Mouse", "Patoruzu", "Mickey Mouse", "Patoruzu"},
+                ticketPassengerNames);
     }
 
 }
