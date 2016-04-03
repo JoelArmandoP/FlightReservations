@@ -52,7 +52,7 @@ public class UserTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("User{name='John Doe', username='JohnDoe', lastSearch=Search{" +
+        assertEquals("User{name='John Doe', username='johndoe', lastSearch=Search{" +
                 "departureAirportSearch=null, departureDateSearch=nullarrivalAirportSearch=null, arrivalDateSearch=null}}",
                 SampleUsers.user1.toString());
     }
