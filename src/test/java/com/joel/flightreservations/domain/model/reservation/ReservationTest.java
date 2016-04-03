@@ -1,5 +1,6 @@
 package com.joel.flightreservations.domain.model.reservation;
 
+import com.joel.flightreservations.domain.model.airport.SampleAirports;
 import com.joel.flightreservations.domain.model.flight.Flight;
 import com.joel.flightreservations.domain.model.flight.SampleFlights;
 import com.joel.flightreservations.domain.model.user.SampleUsers;
@@ -70,6 +71,9 @@ public class ReservationTest {
     @Test
     public void testEmitTicket() throws Exception {
         Reservation reservation = new Reservation(SampleReservations.reservation1);
+        Date exp = SampleAirports.LNDHR.getTimeStamp(2016, 01, 30, 12, 00);
+        reservation.setExpirationDate(exp);
+        assertEquals(exp, reservation.getExpirationDate());
         List<Flight> flights = new ArrayList<>();
         flights.add(SampleFlights.AA030);
         flights.add((SampleFlights.BA149));
@@ -80,5 +84,18 @@ public class ReservationTest {
         reservation.emitTickets(passengerNames);
         Collection<Ticket> tickets = reservation.getTicketCollection();
         assertEquals(4, tickets.size());
+        assertNull(reservation.getExpirationDate());
+        Ticket[] ticketArray = tickets.toArray(new Ticket[tickets.size()]);
+        Arrays.sort(ticketArray, (a, b) -> {
+            return a.getTicketNumber().compareTo(b.getTicketNumber());
+        });
+        String[] ticketNumbers = Arrays.stream(ticketArray).map(t -> t.getTicketNumber()).toArray(s -> new String[s]);
+        assertArrayEquals(new String[] {"AA-030-johndo-001", "AA-030-johndo-002",
+                "BA-149-johndo-001", "BA-149-johndo-002"}, ticketNumbers);
+        String[] ticketPassengerNames = Arrays.stream(ticketArray).map(t -> t.getPassengerName()).
+                toArray(s -> new String[s]);
+        assertArrayEquals(new String[] {"Mickey Mouse", "Patoruzu",
+                "Mickey Mouse", "Patoruzu"}, ticketPassengerNames);
     }
+
 }

@@ -115,13 +115,13 @@ public class Reservation {
     public void emitTickets(List<String> passengerNames) throws SeatsUnavailableException {
         if (passengerNames.size() != getBusinessSeats() + getEconomySeats())
             throw new IllegalArgumentException("Wrong number of passenger names.");
-        int flightNo = 1;
         for (Flight f: flightCollection) {
+            int seqNo = 1;
             f.reserveSeats(getEconomySeats(), getBusinessSeats());
             for (String passengerName: passengerNames) {
-                ticketCollection.add(new Ticket(this, f, passengerName, flightNo));
+                ticketCollection.add(new Ticket(this, f, passengerName, seqNo));
+                seqNo++;
             }
-            flightNo++;
         }
         setExpirationDate(null);
     }
