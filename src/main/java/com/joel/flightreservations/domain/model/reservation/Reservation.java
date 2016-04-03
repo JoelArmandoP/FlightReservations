@@ -39,8 +39,8 @@ public class Reservation {
             throw new IllegalArgumentException("Can't mix classes in a single reservation");
         if (economySeats < 0 || businessSeats < 0)
             throw new IllegalArgumentException("Can't reserve negative seats");
-        this.setTicketCollection(new ArrayList<Ticket>());
-        this.setFlightCollection(new ArrayList<Flight>());
+        this.setTicketCollection(new ArrayList<>());
+        this.setFlightCollection(new ArrayList<>());
         this.setUser(user);
         this.setEconomySeats(economySeats);
         this.setBusinessSeats(businessSeats);
@@ -112,12 +112,23 @@ public class Reservation {
         this.user = user;
     }
 
-    public void emitTickets(List<String> passengerNames) throws SeatsUnavailableException {
+    public void reserve() throws SeatsUnavailableException {
+        for (Flight f: flightCollection) {
+            f.reserveSeats(getEconomySeats(), getBusinessSeats());
+        }
+    }
+
+    public void unreserve() {
+        for (Flight f: flightCollection) {
+            f.unreserveSeats(getEconomySeats(), getBusinessSeats());
+        }
+    }
+
+    public void emitTickets(List<String> passengerNames)  {
         if (passengerNames.size() != getBusinessSeats() + getEconomySeats())
             throw new IllegalArgumentException("Wrong number of passenger names.");
         for (Flight f: flightCollection) {
             int seqNo = 1;
-            f.reserveSeats(getEconomySeats(), getBusinessSeats());
             for (String passengerName: passengerNames) {
                 ticketCollection.add(new Ticket(this, f, passengerName, seqNo));
                 seqNo++;
