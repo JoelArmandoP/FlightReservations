@@ -18,6 +18,15 @@ import java.util.Date;
  * In real life, flights would be imported from data provided by the airlines.
  */
 @Entity
+@NamedQueries(value = {
+        @NamedQuery(name = "Flight.findAll", query = "Select f from Flight f"),
+        @NamedQuery(name = "Flight.findByAirlineCodeAndFlightNumber",
+                query = "Select f from Flight f join f.airline a where a.airlineCode = :airlineCode AND f.flightNumber = :flightNumber"),
+        @NamedQuery(name = "Flight.findDirectFlight",
+                query = "Select f from Flight f join f.departureAirport d, f.arrivalAirport a " +
+                        "where d.airportCode = :departureAirportCode and a.airportCode = :arrivalAirportCode " +
+                        "and f.departureTime >= :departureTime order by f.departureTime")
+})
 public class Flight implements Serializable{
 
     private static final long serialVersionUID = 1L;
