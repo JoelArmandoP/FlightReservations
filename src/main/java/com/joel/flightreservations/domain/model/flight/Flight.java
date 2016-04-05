@@ -30,8 +30,8 @@ import java.util.Date;
 public class Flight implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private static final long BUSINESS_VACANCIES = 10L;
-    private static final long ECONOMY_VACANCIES = 90L;
+    public static final int BUSINESS_VACANCIES = 10;
+    public static final int ECONOMY_VACANCIES = 90;
     @Id
     @GeneratedValue
     private Long id;
@@ -59,9 +59,9 @@ public class Flight implements Serializable{
     @NotNull
     private Date arrivalTime;
     @NotNull
-    private Long businessClassVacancies;
+    private int businessClassVacancies;
     @NotNull
-    private Long economyClassVacancies;
+    private int economyClassVacancies;
     @NotNull
     private float price;
     @ManyToMany
@@ -150,11 +150,11 @@ public class Flight implements Serializable{
         this.arrivalTime = arrivalTime;
     }
 
-    public Long getBusinessClassVacancies() {
+    public int getBusinessClassVacancies() {
         return businessClassVacancies;
     }
 
-    public void setBusinessClassVacancies(Long businessClassVacancies) {
+    public void setBusinessClassVacancies(int businessClassVacancies) {
         Validate.inclusiveBetween(0, BUSINESS_VACANCIES, businessClassVacancies);
         this.businessClassVacancies = businessClassVacancies;
     }
@@ -175,11 +175,11 @@ public class Flight implements Serializable{
         this.departureTime = departureTime;
     }
 
-    public Long getEconomyClassVacancies() {
+    public int getEconomyClassVacancies() {
         return economyClassVacancies;
     }
 
-    public void setEconomyClassVacancies(Long economyClassVacancies) {
+    public void setEconomyClassVacancies(int economyClassVacancies) {
         Validate.inclusiveBetween(0, ECONOMY_VACANCIES, economyClassVacancies);
         this.economyClassVacancies = economyClassVacancies;
     }

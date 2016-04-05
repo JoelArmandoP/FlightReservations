@@ -13,26 +13,26 @@ public class FlightTest {
     public void testReserveSeats() throws Exception {
         Flight f = new Flight(SampleFlights.BA149);
         f.reserveSeats(10, 0);
-        Long seats = 80L;
+        int seats = 80;
         assertEquals(seats, f.getEconomyClassVacancies());
         f.unreserveSeats(10, 0);
-        seats = 90L;
+        seats = 90;
         assertEquals(seats, f.getEconomyClassVacancies());
         f.reserveSeats(90, 0);
-        seats = 0L;
+        seats = 0;
         assertEquals(seats, f.getEconomyClassVacancies());
         f.unreserveSeats(90, 0);
         f.reserveSeats(0, 10);
-        seats = 0L;
+        seats = 0;
         assertEquals(seats, f.getBusinessClassVacancies());
         f.unreserveSeats(0, 10);
         f.reserveSeats(0, 8);
-        seats = 2L;
+        seats = 2;
         assertEquals(seats, f.getBusinessClassVacancies());
         f.unreserveSeats(0, 8);
         f.reserveSeats(10, 5);
-        seats = 80L;
-        Long seats1 = 5L;
+        seats = 80;
+        int seats1 = 5;
         assertEquals(seats, f.getEconomyClassVacancies());
         assertEquals(seats1, f.getBusinessClassVacancies());
     }

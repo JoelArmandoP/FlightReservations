@@ -4,8 +4,10 @@ import com.joel.flightreservations.domain.model.airport.SampleAirports;
 import com.joel.flightreservations.domain.model.flight.Flight;
 import com.joel.flightreservations.domain.model.flight.SampleFlights;
 import com.joel.flightreservations.domain.model.user.SampleUsers;
+import com.joel.flightreservations.util.FixedTimeProvider;
 import org.junit.Test;
 
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -75,8 +77,8 @@ public class ReservationTest {
         reservation.setExpirationDate(exp);
         assertEquals(exp, reservation.getExpirationDate());
         List<Flight> flights = new ArrayList<>();
-        flights.add(SampleFlights.AA030);
-        flights.add((SampleFlights.BA149));
+        flights.add(new Flight(SampleFlights.AA030));
+        flights.add(new Flight(SampleFlights.BA149));
         reservation.setFlightCollection(flights);
         List<String> passengerNames = new ArrayList<>();
         passengerNames.add("Mickey Mouse");
@@ -96,6 +98,23 @@ public class ReservationTest {
         assertArrayEquals(
                 new String[] {"Mickey Mouse", "Patoruzu", "Mickey Mouse", "Patoruzu"},
                 ticketPassengerNames);
+    }
+
+    @Test
+    public void testReserveSeats() throws Exception {
+        Reservation reservation = new Reservation(SampleReservations.reservation1);
+        List<Flight> flights = new ArrayList<>();
+        Flight f1 = new Flight(SampleFlights.AA030);
+        flights.add(f1);
+        Flight f2 = new Flight(SampleFlights.BA149);
+        flights.add(f2);
+        reservation.setFlightCollection(flights);
+        reservation.reserve(buildDate(1973, 9, 4, 8, 30));
+        assertEquals(Flight.BUSINESS_VACANCIES - reservation.getBusinessSeats(), f1.getBusinessClassVacancies());
+        assertEquals(Flight.ECONOMY_VACANCIES, f1.getEconomyClassVacancies());
+        assertEquals(Flight.BUSINESS_VACANCIES - reservation.getBusinessSeats(), f2.getBusinessClassVacancies());
+        assertEquals(Flight.ECONOMY_VACANCIES, f2.getEconomyClassVacancies());
+        assertTrue(Math.abs(buildDate(1973, 9, 4, 8, 32).getTime() - reservation.getExpirationDate().getTime()) < 100);
     }
 
 }

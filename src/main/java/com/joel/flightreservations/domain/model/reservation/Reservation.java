@@ -3,11 +3,13 @@ package com.joel.flightreservations.domain.model.reservation;
 import com.joel.flightreservations.domain.model.flight.Flight;
 import com.joel.flightreservations.domain.model.flight.SeatsUnavailableException;
 import com.joel.flightreservations.domain.model.user.User;
+import com.joel.flightreservations.util.TimeProvider;
 
 import javax.inject.Inject;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
@@ -22,9 +24,6 @@ import java.util.List;
  */
 @Entity
 public class Reservation {
-    @Inject
-    private static Clock clock;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
@@ -40,7 +39,6 @@ public class Reservation {
     private Collection<Flight> flightCollection;
     @OneToMany(mappedBy = "reservation")
     private Collection<Ticket> ticketCollection;
-
 
     public Reservation(User user, int economySeats, int businessSeats, Date expirationDate) {
         if (economySeats > 0 && businessSeats > 0)
@@ -120,12 +118,11 @@ public class Reservation {
         this.user = user;
     }
 
-    public void reserve() throws SeatsUnavailableException {
-        LocalDateTime now = LocalDateTime.now(clock);
+    public void reserve(Date now) throws SeatsUnavailableException {
         for (Flight f: flightCollection) {
             f.reserveSeats(getEconomySeats(), getBusinessSeats());
         }
-        setExpirationDate(Date.from(clock.instant().plus(2, ChronoUnit.MINUTES)));
+        setExpirationDate(Date.from(now.toInstant().plus(2, ChronoUnit.MINUTES)));
     }
 
     public void unreserve() {
@@ -135,9 +132,9 @@ public class Reservation {
         setExpirationDate(null);
     }
 
-    public boolean expired() {
+    public boolean expired(Date now) {
         Date exp = getExpirationDate();
-        return exp == null || exp.before(Date.from(clock.instant()));
+        return exp == null || exp.before(now);
     }
 
     public void emitTickets(List<String> passengerNames)  {
