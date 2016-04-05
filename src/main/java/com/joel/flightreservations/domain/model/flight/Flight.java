@@ -21,10 +21,10 @@ import java.util.Date;
 @NamedQueries(value = {
         @NamedQuery(name = "Flight.findAll", query = "Select f from Flight f"),
         @NamedQuery(name = "Flight.findByAirlineCodeAndFlightNumber",
-                query = "Select f from Flight f join f.airline a where a.airlineCode = :airlineCode AND f.flightNumber = :flightNumber"),
+                query = "Select f from Flight f where f.airline.airlineCode = :airlineCode AND f.flightNumber = :flightNumber"),
         @NamedQuery(name = "Flight.findDirectFlight",
-                query = "Select f from Flight f join f.departureAirport d, f.arrivalAirport a " +
-                        "where d.airportCode = :departureAirportCode and a.airportCode = :arrivalAirportCode " +
+                query = "Select f from Flight f " +
+                        "where f.departureAirport.airportCode = :departureAirportCode and f.arrivalAirport.airportCode = :arrivalAirportCode " +
                         "and f.departureTime >= :departureTime order by f.departureTime")
 })
 public class Flight implements Serializable{
@@ -37,7 +37,6 @@ public class Flight implements Serializable{
     private Long id;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "airlineId")
     private Airline airline;
     @NotNull
     @Pattern(regexp = "[0-9]{3}")
@@ -45,11 +44,9 @@ public class Flight implements Serializable{
     private static final java.util.regex.Pattern VALID_FLIGHT_NUMBER_PATTERN
             = java.util.regex.Pattern.compile("[0-9]{3}");
     @ManyToOne
-    @JoinColumn(name = "departureAirportId")
     @NotNull
     private Airport departureAirport;
     @ManyToOne
-    @JoinColumn(name = "arrivalAirportId")
     @NotNull
     private Airport arrivalAirport;
     @Temporal(TemporalType.TIMESTAMP)
