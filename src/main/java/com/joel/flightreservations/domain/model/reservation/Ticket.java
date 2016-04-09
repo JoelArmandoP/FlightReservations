@@ -81,10 +81,7 @@ public class Ticket {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Ticket)) return false;
-        Ticket ticket = (Ticket) o;
-        return this.id == ticket.id;
+        return (this == o) || (o instanceof Ticket && (id.equals(((Ticket)o).id)));
     }
 
     @Override

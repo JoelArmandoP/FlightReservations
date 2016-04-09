@@ -58,7 +58,7 @@ public class AirportCode implements Serializable {
 
         AirportCode airportCode1 = (AirportCode) o;
 
-        return  airportCode.equals(airportCode1. airportCode);
+        return  airportCode.equals(airportCode1.airportCode);
 
     }
 

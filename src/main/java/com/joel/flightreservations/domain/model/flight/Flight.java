@@ -204,32 +204,12 @@ public class Flight implements Serializable{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Flight)) return false;
-
-        Flight flight = (Flight) o;
-
-        if (!getAirline().equals(flight.getAirline()))
-            return false;
-        if (!getFlightNumber().equals(flight.getFlightNumber()))
-            return false;
-        if (!getDepartureAirport().equals(flight.getDepartureAirport()))
-            return false;
-        if (!getArrivalAirport().equals(flight.getArrivalAirport()))
-            return false;
-        return getDepartureTime().equals(flight.getDepartureTime()) && getArrivalTime().equals(flight.getArrivalTime());
-
+        return (this == o) || (o instanceof Flight && (id.equals(((Flight)o).id)));
     }
 
     @Override
     public int hashCode() {
-        int result = getAirline() != null ? getAirline().hashCode() : 0;
-        result = 31 * result + (getFlightNumber() != null ? getFlightNumber().hashCode() : 0);
-        result = 31 * result + (getDepartureAirport() != null ? getDepartureAirport().hashCode() : 0);
-        result = 31 * result + (getArrivalAirport() != null ? getArrivalAirport().hashCode() : 0);
-        result = 31 * result + (getDepartureTime() != null ? getDepartureTime().hashCode() : 0);
-        result = 31 * result + (getArrivalTime() != null ? getArrivalTime().hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     public void setPrice(float price) {

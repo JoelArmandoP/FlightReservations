@@ -152,13 +152,12 @@ public class Reservation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Reservation)) return false;
+        return (this == o) || (o instanceof Reservation && (id.equals(((Reservation)o).id)));
+    }
 
-        Reservation that = (Reservation) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
@@ -171,9 +170,5 @@ public class Reservation {
                 '}';
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 
 }

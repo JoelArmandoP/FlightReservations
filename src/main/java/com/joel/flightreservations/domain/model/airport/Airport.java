@@ -83,25 +83,18 @@ public class Airport implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Airport)) return false;
+        return (this == o) || (o instanceof Airport && (id.equals(((Airport)o).id)));
+    }
 
-        Airport airport = (Airport) o;
-
-        return getAirportCode().equals(airport.getAirportCode()) && getName().equals(airport.getName());
-
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return name + " [" + airportCode + "]";
     }
-
-    @Override
-    public int hashCode() {
-        return getAirportCode().hashCode();
-    }
-
 
     public Collection<Flight> getDepartingFlightCollection() {
         return departingFlightCollection;
