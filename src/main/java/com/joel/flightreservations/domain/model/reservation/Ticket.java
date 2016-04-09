@@ -17,11 +17,9 @@ public class Ticket {
     @GeneratedValue
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "reservationId")
     private Reservation reservation;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "flightId")
     private Flight flight;
     @NotNull
     private String passengerName;
