@@ -11,10 +11,8 @@ import java.io.Serializable;
 @Embeddable
 public class CreditCard implements Serializable{
     private static final long serialVersionUID = 1L;
-    @NotNull
     @Pattern(regexp = "[0-9]{16}")
     private String creditCardNumber;
-    @NotNull
     // Per spec, expDate should be "a denominator of the card number"
     // I'm not sure what that means. It "an integer divisor" is meant, that doesn't work because
     // the CC number might be prime, and "0001" is not a valid MMDD combination.

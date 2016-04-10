@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xml:lang="en" lang="en">
+<head>
+    <title>This is a test</title>
+</head>
+<h:body>
+
+    <h1>Create new user:</h1>
+
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Username: "/>
+            <h:inputText value="#{userServiceBean.user.username}"/>
+
+            <h:outputLabel value="Fisrt name: "/>
+            <h:inputText value="#{userServiceBean.user.firstname}"/>
+
+            <h:outputLabel value="Last name: "/>
+            <h:inputText value="#{userServiceBean.user.lastname}"/>
+        </h:panelGrid>
+        <h:commandButton value="Create a user" action="#{userServiceBean.createUser}"/>
+    </h:form>
+
+    <h1>Users:</h1>
+
+    <h:dataTable value="#{userServiceBean.findAll()}" var="user">
+        <h:column>
+            <h:outputText value="#{user.username}"/>
+            <h:outputText value="#{user.lastname}"/>
+            <h:outputText value="#{user.firstname}"/>
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>

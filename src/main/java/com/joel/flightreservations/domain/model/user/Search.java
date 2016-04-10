@@ -2,9 +2,7 @@ package com.joel.flightreservations.domain.model.user;
 
 import com.joel.flightreservations.domain.model.airport.Airport;
 
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,66 +12,68 @@ import java.util.Date;
 public class Search {
     @ManyToOne
     @JoinColumn(name = "departureAirportId")
-    private Airport departureAirportSearch;
-    private Date departureDateSearch;
+    private Airport departureAirport;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date departureDate;
     @ManyToOne
     @JoinColumn(name = "arrivalAirportId")
-    private Airport arrivalAirportSearch;
-    private Date arrivalDateSearch;
+    private Airport arrivalAirport;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date arrivalDate;
 
-    public Search(Airport arrivalAirportSearch, Date arrivalDateSearch, Airport departureAirportSearch, Date departureDateSearch) {
-        this.arrivalAirportSearch = arrivalAirportSearch;
-        this.arrivalDateSearch = arrivalDateSearch;
-        this.departureAirportSearch = departureAirportSearch;
-        this.departureDateSearch = departureDateSearch;
+    public Search(Airport arrivalAirport, Date arrivalDate, Airport departureAirportSearch, Date departureDate) {
+        this.arrivalAirport = arrivalAirport;
+        this.arrivalDate = arrivalDate;
+        this.departureAirport = departureAirportSearch;
+        this.departureDate = departureDate;
     }
 
     public Search() {
-        this.departureAirportSearch = null;
-        this.departureDateSearch = null;
-        this.arrivalAirportSearch = null;
-        this.arrivalDateSearch = null;
+        this.departureAirport = null;
+        this.departureDate = null;
+        this.arrivalAirport = null;
+        this.arrivalDate = null;
     }
 
-    public Airport getArrivalAirportSearch() {
-        return arrivalAirportSearch;
+    public Airport getArrivalAirport() {
+        return arrivalAirport;
     }
 
-    public void setArrivalAirportSearch(Airport arrivalAirportSearch) {
-        this.arrivalAirportSearch = arrivalAirportSearch;
+    public void setArrivalAirport(Airport arrivalAirportSearch) {
+        this.arrivalAirport = arrivalAirportSearch;
     }
 
-    public Date getArrivalDateSearch() {
-        return arrivalDateSearch;
+    public Date getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setArrivalDateSearch(Date arrivalDateSearch) {
-        this.arrivalDateSearch = arrivalDateSearch;
+    public void setArrivalDate(Date arrivalDateSearch) {
+        this.arrivalDate = arrivalDateSearch;
     }
 
-    public Airport getDepartureAirportSearch() {
-        return departureAirportSearch;
+    public Airport getDepartureAirport() {
+        return departureAirport;
     }
 
-    public void setDepartureAirportSearch(Airport departureAirportSearch) {
-        this.departureAirportSearch = departureAirportSearch;
+    public void setDepartureAirport(Airport departureAirportSearch) {
+        this.departureAirport = departureAirportSearch;
     }
 
-    public Date getDepartureDateSearch() {
-        return departureDateSearch;
+    public Date getDepartureDate() {
+        return departureDate;
     }
 
-    public void setDepartureDateSearch(Date departureDateSearch) {
-        this.departureDateSearch = departureDateSearch;
+    public void setDepartureDate(Date departureDateSearch) {
+        this.departureDate = departureDateSearch;
     }
 
     @Override
     public String toString() {
         return "Search{" +
-                "departureAirportSearch=" + departureAirportSearch +
-                ", departureDateSearch=" + departureDateSearch +
-                "arrivalAirportSearch=" + arrivalAirportSearch +
-                ", arrivalDateSearch=" + arrivalDateSearch +
+                "departureAirportSearch=" + departureAirport +
+                ", departureDateSearch=" + departureDate +
+                "arrivalAirportSearch=" + arrivalAirport +
+                ", arrivalDateSearch=" + arrivalDate +
                 '}';
     }
 }

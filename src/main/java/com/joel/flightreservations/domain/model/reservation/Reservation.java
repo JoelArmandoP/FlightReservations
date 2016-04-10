@@ -34,6 +34,7 @@ public class Reservation {
     private int businessSeats;
     @NotNull
     private int economySeats;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expirationDate;
     @ManyToMany(mappedBy = "reservationCollection")
     private Collection<Flight> flightCollection;
